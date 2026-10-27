@@ -134,14 +134,14 @@
 <script>
   // Registro del ejercicio (pendiente de hosting, igual que las otras versiones).
   // Mientras REGISTRO_ENDPOINT esté vacío, no se envía nada a ningún servidor.
-  var REGISTRO_ENDPOINT = "";
+  var REGISTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbz5kCNWkSfMk4aVzuX6DMqqF3nxEcsP2FHiD73SYR5XSj1FtQgX7B3Yb63cQ4D1miEDYA/exec";
   var ORIGEN = "parking";
 
   function registrar(tipo, datos) {
     if (!REGISTRO_ENDPOINT) return;
     try {
       var payload = { tipo: tipo, origen: ORIGEN, fechaHora: new Date().toISOString(), userAgent: navigator.userAgent, datos: datos || {} };
-      fetch(REGISTRO_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(function () {});
+      fetch(REGISTRO_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload), keepalive: true }).catch(function () {});
     } catch (e) {}
   }
 

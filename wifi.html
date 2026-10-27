@@ -395,7 +395,7 @@
     // ===== REGISTRO DEL EJERCICIO (Seguridad de la Información) =====
     // Al definir el hosting, completar esta URL: recibirá un POST JSON por escaneo y por envío de formulario.
     // La IP de la persona la registra el servidor/hosting al recibir cada petición.
-    const REGISTRO_ENDPOINT = "";
+    const REGISTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbz5kCNWkSfMk4aVzuX6DMqqF3nxEcsP2FHiD73SYR5XSj1FtQgX7B3Yb63cQ4D1miEDYA/exec";
     const ORIGEN = new URLSearchParams(location.search).get("origen") || "wifi-evento";
     const registroEventos = [];
     function registrarEvento(tipo, datos) {
@@ -403,7 +403,7 @@
       registroEventos.push(evento);
       if (REGISTRO_ENDPOINT) {
         try {
-          fetch(REGISTRO_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(evento), keepalive: true }).catch(function () {});
+          fetch(REGISTRO_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(evento), keepalive: true }).catch(function () {});
         } catch (e) { /* el flujo nunca se bloquea por el registro */ }
       }
     }
