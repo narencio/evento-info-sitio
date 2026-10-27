@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Estaciona gratis desde noviembre | Bci Seguros</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0b0f19; color: #1e293b; min-height: 100vh; }
+  .screen { position: fixed; inset: 0; overflow-y: auto; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .hidden { display: none !important; }
+  .card { width: 100%; max-width: 430px; background: #fff; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,.35); overflow: hidden; margin: auto; }
+  .logo-band { background: #fff; text-align: center; padding: 22px 24px 6px; }
+  .logo-band img { width: 150px; max-width: 100%; height: auto; }
+  .header { background: #002f6c; color: #fff; text-align: center; padding: 22px 24px 24px; }
+  .badge { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.35); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
+  .header h1 { margin: 0; font-size: 30px; line-height: 1.15; font-weight: 800; }
+  .header p { margin: 8px 0 0; color: rgba(255,255,255,.85); font-size: 14px; }
+  form { padding: 22px 24px 24px; }
+  form .intro { text-align: center; color: #475569; font-size: 14px; line-height: 1.5; margin: 0 0 18px; }
+  label { display: block; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 5px; }
+  .field { margin-bottom: 14px; }
+  input { width: 100%; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; font-size: 15px; outline: none; }
+  input:focus { border-color: #0066ff; box-shadow: 0 0 0 3px rgba(0,102,255,.15); }
+  input#patente { text-transform: uppercase; }
+  button.primary { width: 100%; padding: 14px; border: 0; border-radius: 12px; background: #002f6c; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  button.primary:active { background: #051937; }
+  .terms { text-align: center; color: #94a3b8; font-size: 11px; line-height: 1.5; margin: 14px 0 0; }
+  /* Simulación de borrado */
+  #wipe-simulation { background: #090d16; }
+  .wipe-card { width: 100%; max-width: 620px; background: #171717; border: 1px solid rgba(220,38,38,.4); border-radius: 20px; padding: 26px; color: #e5e5e5; margin: auto; }
+  .wipe-card h2 { color: #ef4444; margin: 0 0 6px; font-size: 20px; text-align: center; }
+  .wipe-card .sub { text-align: center; color: #a3a3a3; font-size: 13px; margin: 0 0 20px; }
+  .progress-track { background: #262626; height: 16px; border-radius: 999px; overflow: hidden; border: 1px solid #404040; }
+  #progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ea580c, #dc2626); border-radius: 999px; transition: width .15s ease-out; }
+  .progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; font-family: ui-monospace, Menlo, monospace; }
+  #percentage-text { color: #ef4444; font-size: 22px; font-weight: 700; }
+  #current-action { font-size: 13px; color: #d4d4d4; }
+  .terminal { background: #000; border: 1px solid #262626; border-radius: 12px; padding: 12px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #a3a3a3; height: 110px; overflow-y: auto; margin-top: 18px; }
+  .terminal .alert { color: #f87171; }
+  .warn { text-align: center; color: #737373; font-family: ui-monospace, Menlo, monospace; font-size: 11px; margin-top: 14px; }
+  /* Revelación */
+  #reveal-overlay { background: rgba(5,25,55,.97); }
+  .reveal-card { width: 100%; max-width: 560px; background: #fff; border-radius: 24px; border-top: 8px solid #e30613; padding: 30px 26px; text-align: center; margin: auto; }
+  .ok-badge { display: inline-block; background: #d1fae5; color: #065f46; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 5px 14px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+  .reveal-card h2 { color: #051937; font-size: 26px; margin: 0; line-height: 1.2; }
+  .reveal-card h2 span { color: #059669; }
+  .reveal-card p.body { color: #475569; line-height: 1.6; font-size: 15px; }
+  .tip { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; text-align: left; font-size: 13px; color: #334155; line-height: 1.55; margin: 20px 0; }
+  .pact { background: #fffbeb; border: 2px dashed #f59e0b; border-radius: 16px; padding: 20px; text-align: left; position: relative; }
+  .pact .only-you { position: absolute; top: 12px; right: 12px; transform: rotate(-6deg); background: #fbbf24; color: #451a03; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+  .pact h3 { color: #051937; margin: 0 0 8px; font-size: 19px; }
+  .pact p { color: #475569; font-size: 14px; line-height: 1.55; margin: 8px 0; }
+  button.pact-btn { margin-top: 14px; padding: 11px 20px; border: 0; border-radius: 999px; background: #e30613; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
+  #secrecy-pact-done { color: #047857; font-weight: 700; font-size: 14px; margin-top: 14px; }
+  .footer { margin-top: 20px; color: #94a3b8; font-family: ui-monospace, Menlo, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+
+<!-- FASE 0: SEÑUELO — ESTACIONAMIENTO GRATIS -->
+<section id="lure-screen" class="screen" style="background:#f1f5f9;">
+  <div class="card">
+    <div class="logo-band">
+      <img src="data:image/png;base64,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" alt="Parkup" />
+    </div>
+    <div class="header">
+      <span class="badge">Solo para colaboradores</span>
+      <h1>Estaciona gratis</h1>
+      <p>A partir de noviembre · Bci Seguros</p>
+    </div>
+    <form id="lure-form">
+      <p class="intro">Inscríbete en menos de un minuto y asegura tu estacionamiento gratuito desde noviembre.</p>
+      <div class="field">
+        <label for="f-nombre">Nombre completo</label>
+        <input id="f-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Ej.: María González" />
+      </div>
+      <div class="field">
+        <label for="f-correo">Correo corporativo</label>
+        <input id="f-correo" name="correo" type="email" required autocomplete="email" placeholder="nombre@bciseguros.cl" />
+      </div>
+      <div class="field">
+        <label for="f-patente">Patente del vehículo</label>
+        <input id="f-patente" name="patente" type="text" required placeholder="Ej.: AB1234" maxlength="10" />
+      </div>
+      <button class="primary" type="submit">Inscribirme gratis</button>
+      <p class="terms">Beneficio exclusivo para colaboradores Bci Seguros. Al inscribirte aceptas los términos del beneficio de estacionamiento.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FASE 1: SIMULACIÓN DE BORRADO DE DATOS -->
+<section id="wipe-simulation" class="screen hidden">
+  <div class="wipe-card">
+    <h2>⚠️ Alerta crítica del dispositivo</h2>
+    <p class="sub">Secuencia de vaciado forzado activa</p>
+    <div style="text-align:center; margin-bottom:18px;">
+      <p style="font-size:20px; font-weight:800; color:#fff; margin:0;">Eliminando datos de este dispositivo...</p>
+      <p style="color:#a3a3a3; font-size:14px;">Se ha detectado una vulnerabilidad de acceso remoto. La memoria interna y credenciales vinculadas están siendo desintegradas.</p>
+    </div>
+    <div class="progress-row">
+      <span id="current-action">Iniciando proceso de borrado...</span>
+      <span id="percentage-text">0%</span>
+    </div>
+    <div class="progress-track"><div id="progress-bar-fill"></div></div>
+    <div class="terminal" id="terminal-logs">
+      <div class="alert">&gt; [SYS_ALERT] Ejecución no autorizada detectada...</div>
+    </div>
+    <p class="warn">NO CIERRE ESTA PESTAÑA NI BLOQUEE EL TELÉFONO HASTA COMPLETAR EL PROCESO</p>
+  </div>
+</section>
+
+<!-- FASE 2: REVELACIÓN Y PACTO DE SECRETO -->
+<div id="reveal-overlay" class="screen hidden">
+  <div class="reveal-card">
+    <span class="ok-badge">Tus datos están a salvo</span>
+    <h2>¡Respira! Tus datos <span>no</span> fueron borrados.</h2>
+    <p class="body">Sentiste un salto en el corazón, ¿verdad? <strong>Acabas de escanear un código QR de origen desconocido</strong>. En un ataque real de <em>Quishing</em> (phishing vía QR), un atacante habría obtenido tus credenciales corporativas o infectado tu teléfono en un segundo.</p>
+    <div class="tip">
+      💡 Esto es un <strong>ejercicio interno de concientización de Seguridad de la Información</strong>. Un código QR de origen desconocido puede llevarte a una página falsa que robe tus credenciales o instale software malicioso en tu equipo. Antes de escanear, detente un segundo y verifica el origen.
+    </div>
+    <div class="pact">
+      <span class="only-you">Solo para ti</span>
+      <h3>🤫 No le cuentes a nadie</h3>
+      <p>Este ejercicio <strong>seguirá llegando a más colaboradores</strong>, y todo su poder está en la sorpresa: si se pasa la voz, tus compañeros llegarán prevenidos y la concientización pierde su efecto.</p>
+      <p>Que cada uno viva la experiencia tal como la viviste tú. Si alguien te pregunta qué pasa al escanear, solo sonríe y di: <em>«ya te va a tocar»</em>.</p>
+      <button id="secrecy-pact-btn" class="pact-btn" type="button">🤫 Entendido: guardo el secreto</button>
+      <p id="secrecy-pact-done" class="hidden">✓ Pacto sellado. Gracias por cuidar a tu equipo.</p>
+    </div>
+    <p class="footer">Campaña interna de concientización · Seguridad de la Información</p>
+  </div>
+</div>
+
+<script>
+  // Registro del ejercicio (pendiente de hosting, igual que las otras versiones).
+  // Mientras REGISTRO_ENDPOINT esté vacío, no se envía nada a ningún servidor.
+  var REGISTRO_ENDPOINT = "";
+  var ORIGEN = "parking";
+
+  function registrar(tipo, datos) {
+    if (!REGISTRO_ENDPOINT) return;
+    try {
+      var payload = { tipo: tipo, origen: ORIGEN, fechaHora: new Date().toISOString(), userAgent: navigator.userAgent, datos: datos || {} };
+      fetch(REGISTRO_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(function () {});
+    } catch (e) {}
+  }
+
+  registrar("escaneo", {});
+
+  var wipeSteps = [
+    { at: 5, action: "Localizando índice de almacenamiento interno...", log: "Escaneando almacenamiento del dispositivo..." },
+    { at: 20, action: "Desencriptando credenciales de acceso local...", log: "Extrayendo tokens de sesión..." },
+    { at: 40, action: "Vaciando galerías fotográficas y multimedia...", log: "Purgando archivos multimedia..." },
+    { at: 60, action: "Extrayendo historial y bases de datos de mensajería...", log: "Desvinculando llaves de mensajería..." },
+    { at: 80, action: "Eliminando claves guardadas y certificados...", log: "Borrando cookies de autenticación..." },
+    { at: 95, action: "Formateando partición de recuperación del sistema...", log: "Escribiendo ceros en bloques de memoria..." },
+    { at: 100, action: "¡Vaciado completo!", log: "ERROR_CRITICO: Sistema completamente formateado." }
+  ];
+
+  var progress = 0;
+  var timer = null;
+
+  function tickSimulation() {
+    progress = Math.min(100, progress + (Math.random() * 1.8 + 0.5));
+    var percent = Math.floor(progress);
+    document.getElementById("progress-bar-fill").style.width = percent + "%";
+    document.getElementById("percentage-text").textContent = percent + "%";
+    var step = wipeSteps[0];
+    for (var i = 0; i < wipeSteps.length; i++) {
+      if (percent >= wipeSteps[i].at) step = wipeSteps[i];
+    }
+    document.getElementById("current-action").textContent = step.action;
+    var logs = document.getElementById("terminal-logs");
+    var lastLog = logs.lastElementChild ? logs.lastElementChild.textContent : "";
+    if (lastLog.indexOf(step.log) === -1) {
+      var div = document.createElement("div");
+      div.textContent = "> " + step.log;
+      logs.appendChild(div);
+      logs.scrollTop = logs.scrollHeight;
+    }
+    if (percent >= 100) {
+      clearInterval(timer);
+      setTimeout(function () {
+        document.getElementById("wipe-simulation").classList.add("hidden");
+        document.getElementById("reveal-overlay").classList.remove("hidden");
+      }, 900);
+    }
+  }
+
+  document.getElementById("lure-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var nombre = document.getElementById("f-nombre").value;
+    var correo = document.getElementById("f-correo").value;
+    var patente = document.getElementById("f-patente").value;
+    registrar("envio_formulario", { nombre: nombre, correo: correo, patenteIngresada: !!patente });
+    document.getElementById("lure-screen").classList.add("hidden");
+    document.getElementById("wipe-simulation").classList.remove("hidden");
+    timer = setInterval(tickSimulation, 180);
+  });
+
+  document.getElementById("secrecy-pact-btn").addEventListener("click", function () {
+    this.classList.add("hidden");
+    document.getElementById("secrecy-pact-done").classList.remove("hidden");
+  });
+</script>
+</body>
+</html>
